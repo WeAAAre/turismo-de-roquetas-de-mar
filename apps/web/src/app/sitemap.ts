@@ -1,4 +1,5 @@
 import type { Locale } from '@/lib/i18/config';
+import { env } from '@/env/server.mjs';
 
 import { generateStaticParams as termsAndConditionsStaticParams } from './[lang]/terminos-y-condiciones/page';
 import { generateStaticParams as policyStaticParams } from './[lang]/politica-de-privacidad/page';
@@ -67,7 +68,7 @@ const toSitemap =
     changeFrequency: NonNullable<MetadataRoute.Sitemap[0]>['changeFrequency'];
   }) =>
   (params?: Record<string, string>): MetadataRoute.Sitemap[0] => ({
-    url: cg.build(...Object.values(params || {})),
+    url: `${env.URL}${cg.build(...Object.values(params || {}))}`,
     changeFrequency: cg.changeFrequency,
     priority: cg.priority,
   });
