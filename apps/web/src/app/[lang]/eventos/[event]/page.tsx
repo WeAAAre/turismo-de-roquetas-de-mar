@@ -34,12 +34,11 @@ export async function generateStaticParams() {
   );
 
   return events
-    .map(
-      (event) =>
-        event.translations?.map((translation) => ({
-          lang: translation.languages_code as string,
-          event: event.sluglify as string,
-        })),
+    .map((event) =>
+      event.translations?.map((translation) => ({
+        lang: translation.languages_code as string,
+        event: event.sluglify as string,
+      })),
     )
     .flat();
 }

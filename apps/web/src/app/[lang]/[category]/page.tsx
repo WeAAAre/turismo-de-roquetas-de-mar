@@ -29,12 +29,11 @@ export async function generateStaticParams() {
   );
 
   return categories
-    .map(
-      (category) =>
-        category.translations?.map((translation) => ({
-          lang: translation.languages_code as string,
-          category: category.sluglify as string,
-        })),
+    .map((category) =>
+      category.translations?.map((translation) => ({
+        lang: translation.languages_code as string,
+        category: category.sluglify as string,
+      })),
     )
     .flat();
 }

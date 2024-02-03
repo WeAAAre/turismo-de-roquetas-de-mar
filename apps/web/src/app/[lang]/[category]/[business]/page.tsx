@@ -45,13 +45,12 @@ export async function generateStaticParams() {
   );
 
   return items
-    .map(
-      (item) =>
-        item.translations?.map((translation) => ({
-          lang: translation.languages_code as string,
-          category: item.category.sluglify as string,
-          business: item.sluglify as string,
-        })),
+    .map((item) =>
+      item.translations?.map((translation) => ({
+        lang: translation.languages_code as string,
+        category: item.category.sluglify as string,
+        business: item.sluglify as string,
+      })),
     )
     .flat();
 }
