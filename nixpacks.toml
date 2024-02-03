@@ -6,6 +6,7 @@ CI = 'true'
 NIXPACKS_METADATA = 'node'
 NODE_ENV = 'production'
 NPM_CONFIG_PRODUCTION = 'false'
+NIXPACKS_TURBO_APP_NAME = '@gisei-studio/turismo-de-roquetas-de-mar-web'
 [phases.build]
 dependsOn = ['install']
 cmds = ['pnpm run build']
