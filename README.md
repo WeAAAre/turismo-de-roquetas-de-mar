@@ -1,8 +1,8 @@
-# Template for monorepo
+# Turismo de Roquetas de Mar
 
 ## Introduction
 
-[TODO]: Description of the project.
+Set of tools for Roquetas de Mar
 
 ## Contributing
 

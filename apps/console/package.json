@@ -1,0 +1,31 @@
+{
+  "name": "@gisei-studio/turismo-de-rpquetas-de-mar-console",
+  "version": "0.0.0",
+  "description": "Console for Te Lo Valoro",
+  "homepage": "https://github.com/gisei-studio/turismo-de-rpquetas-de-mar/apps/console",
+  "bugs": {
+    "url": "https://github.com/gisei-studio/turismo-de-rpquetas-de-mar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gisei-studio/turismo-de-rpquetas-de-mar.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Carlos Garrido Marin (cgm164)",
+  "scripts": {
+    "bootstrap": "directus bootstrap",
+    "database:update": "directus database migrate:latest",
+    "dev": "directus start",
+    "generate:schema": "directus models snapshot ../web/src/lib/directus/schema.ts"
+  },
+  "dependencies": {
+    "@img/sharp-win32-x64": "0.33.2",
+    "directus": "9.22.3",
+    "directus-extension-models": "2.5.2",
+    "mysql": "2.18.1"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  }
+}

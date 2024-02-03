@@ -1,14 +1,14 @@
 {
-  "name": "@prismaworks/template-mono-repo",
+  "name": "@gisei-studio/turismo-de-roquetas-de-mar",
   "version": "0.0.0",
   "description": "Template for a mono repo for a Prisma projects",
-  "homepage": "https://github.com/prismaworks/template-mono-repo",
+  "homepage": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar",
   "bugs": {
-    "url": "https://github.com/prismaworks/template-mono-repo/issues"
+    "url": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prismaworks/template-mono-repo.git"
+    "url": "git+https://github.com/gisei-studio/turismo-de-roquetas-de-mar.git"
   },
   "license": "UNLICENSED",
   "author": "Carlos Garrido Marin (cgm164)",
@@ -16,24 +16,28 @@
     "build": "turbo run build",
     "clean": "turbo run clean && rimraf .turbo node_modules",
     "dev": "turbo run dev",
-    "format": "prettier --cache --check packages/**/* apps/**/*",
-    "format:fix": "prettier --write packages/**/* apps/**/*",
+    "format": "prettier --cache --check  apps/**/*.{ts,tsx,js,jsx,json,md}",
+    "format:fix": "prettier --write  apps/**/*.{ts,tsx,js,jsx,json,md}",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "prepare": "husky install",
     "publish:packages": "turbo run build lint && changeset version && changeset publish"
   },
-  "prettier": "@prismaworks/style/prettier",
+  "prettier": "@gisei-studio/style/prettier",
   "devDependencies": {
     "@changesets/cli": "2.27.1",
     "@commitlint/cli": "18.4.3",
     "@commitlint/config-conventional": "18.4.3",
-    "@prismaworks/style": "0.3.0",
-    "eslint": "8.55.0",
+    "@gisei-studio/style": "0.0.0",
+    "eslint": "8.56.0",
     "husky": "8.0.3",
-    "prettier": "3.1.0",
+    "prettier": "3.2.4",
     "rimraf": "5.0.5",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.9.0"
+  "packageManager": "pnpm@8.9.0",
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  }
 }

@@ -1,0 +1,87 @@
+import { AiOutlineArrowRight as ArrowRightIcon } from '@react-icons/all-files/ai/AiOutlineArrowRight';
+import { readItems } from '@directus/sdk';
+
+import { directus } from '@/lib/directus/server';
+import * as Grid from '@/components/grid/grid';
+
+import SectionTitle from '../section-title/section-title';
+import OffersList from './offers-list';
+import * as OfferCard from './offer-card';
+
+interface OffersSectionProps {
+  lang: string;
+}
+
+const getOfferLink = (offer: { id: number }) => `/ofertas?p=${offer.id}`;
+
+const OffersSection = async (props: OffersSectionProps) => {
+  const { lang } = props;
+
+  const offers = await directus.request(
+    readItems('ideas_offers', {
+      fields: [
+        'id',
+        'end_date',
+        {
+          image: ['title', 'id'],
+        },
+        {
+          translations: ['title'],
+        },
+      ],
+      sort: ['end_date'],
+      limit: 7,
+      filter: {
+        end_date: {
+          _gte: new Date().toISOString(),
+        },
+      },
+      deep: {
+        translations: {
+          _filter: {
+            languages_code: lang,
+          },
+        },
+      },
+    }),
+  );
+
+  return (
+    <Grid.Root>
+      <Grid.Item col="12">
+        <SectionTitle title="Ofertas e ideas para disfutar" />
+      </Grid.Item>
+      <Grid.Item className="mt-5 lg:mt-10 -mr-5 lg:mr-0" col="12">
+        <OffersList>
+          {offers.map((offer) => (
+            <OfferCard.Root href={getOfferLink(offer)} key={offer.id}>
+              <OfferCard.Image
+                image={offer.image}
+                title={offer.translations?.[0]?.title || ''}
+              />
+              <OfferCard.Content>
+                <OfferCard.Title>
+                  {offer.translations?.[0]?.title || ''}
+                </OfferCard.Title>
+                <OfferCard.RemainTime endDate={offer.end_date!} lang={lang} />
+              </OfferCard.Content>
+            </OfferCard.Root>
+          ))}
+          <OfferCard.Root href="/ofertas">
+            <OfferCard.Content>
+              <h3 className="flex h-full items-center font-medium text-lg first-letter:uppercase">
+                Ver todas las ofertas
+              </h3>
+              <div className="flex justify-end">
+                <ArrowRightIcon aria-hidden className="w-5 min-h-5" />
+              </div>
+            </OfferCard.Content>
+          </OfferCard.Root>
+          <li className="pr-1" />
+        </OffersList>
+      </Grid.Item>
+    </Grid.Root>
+  );
+};
+
+export default OffersSection;

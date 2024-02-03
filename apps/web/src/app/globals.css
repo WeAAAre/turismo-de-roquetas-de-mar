@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.typo-stroke-primary {
+  -webkit-text-stroke: 2px rgba(var(--primary), 1) !important;
+}
+
+.typo-stroke-white {
+  -webkit-text-stroke: 2px white !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.ql-video {
+  width: 100%;
+  height: 50vh;
+  min-height: 300px;
+  max-height: 500px;
+}
+
+.ctr-animation {
+  animation: moveLeftRight 2s ease-in-out infinite;
+}
+
+@keyframes moveLeftRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(0.25rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@layer base {
+  :root {
+    --color-primary: 135, 193, 224;
+    --color-secondary: white;
+
+    --body-background: #f1f1f1;
+
+    --background-primary: 105, 98, 109;
+    --background-secondary: 207, 216, 215;
+    --background-tertiary: 51, 50, 50;
+
+    --primary: 48, 48, 48;
+    --primary-hover: 59, 130, 246;
+    --secondary: white;
+
+    --shadow-sm: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --shadow: 0 0 #000, 0.3px 0.8px 1.1px rgba(187 187 187 / 0.11),
+      0.5px 1.3px 1.8px -0.6px rgba(187 187 187 / 0.18),
+      1.1px 2.7px 3.8px -1.2px rgba(187 187 187 / 0.26);
+
+    --purple: #6644ff;
+    --pink: #ff99dd;
+    --blue: #3399ff;
+    --green: #2ecda7;
+    --yellow: #fbc54f;
+    --orange: #ffa439;
+    --red: #e35169;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-poppins);
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}

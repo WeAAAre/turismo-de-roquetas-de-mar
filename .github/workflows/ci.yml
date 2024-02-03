@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+env:
+  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
+  COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+
+jobs:
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+        with:
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
+      - name: Run commitlint check
+        run: pnpm commitlint -f ${{ github.sha }}
+
+  eslint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+        with:
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
+      - name: Run Linter check
+        run: pnpm lint
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+        with:
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
+      - name: Run Prettier check
+        run: pnpm format
+
+  release:
+    name: Release
+    needs: [eslint, prettier, commitlint]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+        with:
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
+      - name: Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          title: 'chore(release): version packages 🦋'
+          publish: pnpm publish:packages
+          commit: 'chore(release): version packages 🦋 [skip ci]'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
+  deploy:
+    name: Deploy
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ env.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'

@@ -1,9 +1,9 @@
-name: 'Install'
-description: 'Sets up Node, and installs dependencies'
+name: Install
+description: Sets up Node, and installs dependencies
 
 inputs:
   NPM_TOKEN:
-    description: 'The NPM token to use for authentication'
+    description: The NPM token to use for authentication
     required: false
 
 runs:
@@ -19,12 +19,19 @@ runs:
       with:
         node-version: 18
 
+    - name: Set NPM_TOKEN env
+      shell: bash
+      run: |
+        if [[ -n "${{ inputs.NPM_TOKEN }}" ]]; then
+          echo "NPM_TOKEN=${{ inputs.NPM_TOKEN }}" >> $GITHUB_ENV
+        fi
+
     - uses: pnpm/action-setup@v2
       name: Install pnpm
       with:
         version: 8
         run_install: false
-
+      
     - name: Get pnpm store directory
       shell: bash
       run: |
@@ -37,12 +44,6 @@ runs:
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
-
-    - name: Set publishing config
-      shell: bash
-      run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.NPM_TOKEN }}
 
     - name: Install dependencies
       shell: bash
