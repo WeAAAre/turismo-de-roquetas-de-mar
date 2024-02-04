@@ -21,7 +21,7 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "prepare": "husky install",
-    "publish:packages": "changeset version && changeset publish"
+    "publish:packages": "turbo build --filter=./packages/* && changeset version && changeset publish"
   },
   "prettier": "@gisei-studio/style/prettier",
   "devDependencies": {
