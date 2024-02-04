@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@gisei-studio/directus-extension-mapbox-operation": "workspace:*",
+    "@gisei-studio/directus-extension-slug-interface": "workspace:*",
     "@gisei-studio/directus-extension-translate-operation": "workspace:*",
     "@img/sharp-win32-x64": "0.33.2",
     "directus": "10.8.3",

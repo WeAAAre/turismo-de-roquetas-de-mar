@@ -90,19 +90,7 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - name: Check out
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Check if there are changes in apps/web
-        id: check_changes
-        run: |
-          git fetch --depth=1 origin +refs/heads/main:refs/remotes/origin/main
-          git diff --name-only origin/main -- apps/web
-
       - name: Deploy to Coolify
-        if: steps.check_changes.outputs.stdout != ''
         run: |
           curl --request GET '${{ env.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'
 
