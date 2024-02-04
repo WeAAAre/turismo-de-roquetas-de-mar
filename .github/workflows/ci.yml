@@ -9,6 +9,7 @@ on:
 env:
   NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
+  COOLIFY_WEBHOOK_CONSOLE: ${{ secrets.COOLIFY_WEBHOOK_CONSOLE }}
   COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
 
 jobs:
@@ -85,10 +86,26 @@ jobs:
           NPM_TOKEN: ${{ env.NPM_TOKEN }}
 
   deploy:
-    name: Deploy
+    name: Deploy turismoderoquetasdemar.es
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if there are changes in apps/web
+        id: check_changes
+        run: |
+          git fetch --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          git diff --name-only origin/main -- apps/web
+
+      - name: Deploy to Coolify
+        if: steps.check_changes.outputs.stdout != ''
+        run: |
+          curl --request GET '${{ env.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'
+
+  deploy_console:
+    name: Deploy console.turismoderoquetasdemar.es
     needs: [release]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Coolify
         run: |
-          curl --request GET '${{ env.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'
+          curl --request GET '${{ env.COOLIFY_WEBHOOK_CONSOLE }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'

@@ -1,0 +1,51 @@
+{
+  "name": "@gisei-studio/directus-extension-mapbox-operation",
+  "version": "0.0.0",
+  "description": "Mapbox Places operation for request name of place",
+  "keywords": [
+    "directus",
+    "directus-extension",
+    "directus-custom-operation"
+  ],
+  "homepage": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/packages/mapbox-operation",
+  "bugs": {
+    "url": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gisei-studio/turismo-de-roquetas-de-mar.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Carlos Garrido Marin (cgm164)",
+  "type": "module",
+  "scripts": {
+    "build": "directus-extension build",
+    "dev": "directus-extension build -w --no-minify",
+    "link": "directus-extension link",
+    "lint": "eslint --ext .ts src",
+    "lint:fix": "eslint --ext .ts src --fix"
+  },
+  "dependencies": {
+    "axios": "1.6.7"
+  },
+  "devDependencies": {
+    "@directus/extensions-sdk": "10.3.0",
+    "@types/node": "20.11.16",
+    "eslint": "8.56.0",
+    "typescript": "5.3.3",
+    "vue": "3.4.15"
+  },
+  "icon": "extension",
+  "directus:extension": {
+    "type": "operation",
+    "path": {
+      "app": "dist/app.js",
+      "api": "dist/api.js"
+    },
+    "source": {
+      "app": "src/app.ts",
+      "api": "src/api.ts"
+    },
+    "host": "^10.3.0"
+  }
+}
