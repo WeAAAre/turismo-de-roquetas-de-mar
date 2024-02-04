@@ -10,11 +10,11 @@ const Tag = forwardRef<TagProps, 'div'>((props, ref) => {
   const { as: Component = 'div', variant, className, ...restProps } = props;
 
   const rootCls = cn(
-    'rounded-full text-xs py-1 px-3',
+    'rounded-full text-xs py-1 px-3 font-medium',
     {
-      'bg-yellow-600 text-white': variant === 'warning',
-      'bg-green-600 text-white': variant === 'success',
-      'bg-red-500 text-white': variant === 'error',
+      'bg-[#ffc845] text-black': variant === 'warning',
+      'bg-[#2ecda7] text-black': variant === 'success',
+      'bg-[#d3273e] text-white': variant === 'error',
     },
     className,
   );

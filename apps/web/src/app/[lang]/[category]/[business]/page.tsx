@@ -247,10 +247,7 @@ const BusinessPage = async (props: BusinessPageProps) => {
                   pdfs={item.pdfs?.map((pdf) => pdf.directus_files_id)}
                 />
                 <BusinessContent.Image360
-                  src={assetURL(item.image360, {
-                    format: 'webp',
-                    quality: 75,
-                  })}
+                  src={`/_next/image?url=${encodeURIComponent(assetURL(item.image360))}&w=2700&q=75`}
                 />
               </>
             )}

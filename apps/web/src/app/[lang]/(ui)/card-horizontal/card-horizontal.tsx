@@ -19,7 +19,7 @@ const CardHorizontal = (props: CardHorizontalProps) => {
   return (
     <Link
       className={cn(
-        'border flex gap-3 w-full rounded-lg hover:bg-blue-100/30',
+        'border flex gap-1 items-center w-full rounded-lg hover:bg-blue-100/30',
         className,
       )}
       href={href}
@@ -33,7 +33,12 @@ const CardHorizontalTitle = (props: BaseProps) => {
   const { children, className } = props;
 
   return (
-    <div className={cn('flex-1 flex items-center py-1 px-2', className)}>
+    <div
+      className={cn(
+        'flex-1 flex items-center py-1 px-2 line-clamp-3',
+        className,
+      )}
+    >
       {children}
     </div>
   );

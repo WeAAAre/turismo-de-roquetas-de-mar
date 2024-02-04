@@ -68,6 +68,7 @@ const HeroSection = async (props: HeroSectionProps) => {
           className="absolute left-0 top-0 bg-black/70 h-full w-full"
         />
         <Fab
+          aria-label="Contactar por Whatsapp"
           className="bg-[#25D366]"
           href={`https://wa.me/${whatsapp}`}
           position="bottom-right"
@@ -87,12 +88,14 @@ const HeroSection = async (props: HeroSectionProps) => {
           <div className="flex justify-center gap-2 mt-2">
             {facebook ? (
               <SocialMediaLink
+                aria-label="Ir al Facebook de Turismo Roquetas de Mar"
                 href={facebook}
                 icon={<FacebookIcon aria-hidden className="w-6 h-6" />}
               />
             ) : null}
             {instagram ? (
               <SocialMediaLink
+                aria-label="Ir al Instagram de Turismo Roquetas de Mar"
                 href={instagram}
                 icon={<InstagramIcon aria-hidden className="w-6 h-6" />}
               />

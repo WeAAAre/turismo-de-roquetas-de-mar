@@ -17,8 +17,13 @@ const OfferCard = (props: OfferCardProps) => {
   const { children, href, className } = props;
 
   return (
-    <li className="min-w-52 max-w-52 border rounded-lg overflow-hidden">
-      <Link className={cn('flex flex-col h-full', className)} href={href}>
+    <li
+      className={cn(
+        'min-w-52 max-w-52 border rounded-lg overflow-hidden',
+        className,
+      )}
+    >
+      <Link className={cn('flex flex-col h-full')} href={href}>
         {children}
       </Link>
     </li>

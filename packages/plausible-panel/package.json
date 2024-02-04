@@ -1,0 +1,38 @@
+{
+  "name": "@gisei-studio/directus-extension-plausible-panel-turismo-roquetas-de-mar",
+  "version": "0.0.0",
+  "description": "Plausible Panel for Turismo de Roquetas de Mar",
+  "keywords": [
+    "directus",
+    "directus-extension",
+    "directus-custom-module"
+  ],
+  "homepage": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/packages/plausible-panel",
+  "bugs": {
+    "url": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gisei-studio/turismo-de-roquetas-de-mar.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Carlos Garrido Marin (cgm164)",
+  "type": "module",
+  "scripts": {
+    "build": "directus-extension build",
+    "dev": "directus-extension build -w --no-minify",
+    "link": "directus-extension link"
+  },
+  "devDependencies": {
+    "@directus/extensions-sdk": "10.3.0",
+    "typescript": "^5.3.3",
+    "vue": "^3.4.15"
+  },
+  "icon": "extension",
+  "directus:extension": {
+    "type": "module",
+    "path": "dist/index.js",
+    "source": "src/index.ts",
+    "host": "^10.3.0"
+  }
+}

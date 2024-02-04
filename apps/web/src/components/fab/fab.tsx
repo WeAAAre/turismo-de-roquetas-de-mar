@@ -7,10 +7,11 @@ interface FabProps {
   className?: string;
   children?: React.ReactNode;
   position?: 'bottom-right' | 'bottom-left';
+  'aria-label': string;
 }
 
 const Fab = (props: FabProps) => {
-  const { href, className, children, position } = props;
+  const { href, className, children, position, ...restProps } = props;
 
   const rootCls = cn(
     'fixed z-50 text-primary rounded-full p-4',
@@ -22,7 +23,7 @@ const Fab = (props: FabProps) => {
   );
 
   return (
-    <Link className={rootCls} href={href}>
+    <Link className={rootCls} href={href} {...restProps}>
       {children}
     </Link>
   );

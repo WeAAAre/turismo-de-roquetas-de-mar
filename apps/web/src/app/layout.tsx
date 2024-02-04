@@ -6,8 +6,9 @@ interface LayoutProps {
 
 const Layout = (props: LayoutProps) => {
   const { children } = props;
-
   return children;
 };
+
+export const revalidate = 60 * 10;
 
 export default Layout;

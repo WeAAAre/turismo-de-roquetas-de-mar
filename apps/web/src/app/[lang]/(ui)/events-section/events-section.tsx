@@ -119,7 +119,7 @@ const EventsSection = async (props: EventsSectionProps) => {
                     className="object-cover border-x"
                     fill
                     item={event.image}
-                    sizes="35vw"
+                    sizes="(max-width: 768px) 20vw, (min-width: 768px) 12vw"
                   />
                 </div>
                 <h3 className="col-span-7 lowercase text-black/95 py-2 first-letter:uppercase px-4 leading-5">

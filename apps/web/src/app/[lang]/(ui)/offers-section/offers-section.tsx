@@ -47,14 +47,18 @@ const OffersSection = async (props: OffersSectionProps) => {
   );
 
   return (
-    <Grid.Root>
-      <Grid.Item col="12">
+    <Grid.Root className="px-0">
+      <Grid.Item className="px-5" col="12">
         <SectionTitle title="Ofertas e ideas para disfutar" />
       </Grid.Item>
-      <Grid.Item className="mt-5 lg:mt-10 -mr-5 lg:mr-0" col="12">
+      <Grid.Item className=" mt-5 lg:mt-10" col="12">
         <OffersList>
           {offers.map((offer) => (
-            <OfferCard.Root href={getOfferLink(offer)} key={offer.id}>
+            <OfferCard.Root
+              className="first-of-type:ml-5"
+              href={getOfferLink(offer)}
+              key={offer.id}
+            >
               <OfferCard.Image
                 image={offer.image}
                 title={offer.translations?.[0]?.title || ''}

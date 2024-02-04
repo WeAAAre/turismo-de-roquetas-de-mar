@@ -152,24 +152,24 @@ const OffersPage = async (props: OffersPageProps) => {
           </Suspense>
         </Grid.Item>
         <Grid.Item className="mt-6" col="12">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
             {offers.map((offer) => (
               <li key={offer.id}>
                 <Link
-                  className="bg-white border rounded-lg p-4 m-2 col-span-1 flex gap-3 hover:border-blue-500/20 hover:bg-blue-500/5 transition-colors"
+                  className="bg-white border rounded-lg p-4 col-span-1 flex gap-3 hover:border-blue-500/20 hover:bg-blue-500/5 transition-colors"
                   href={`?p=${offer.id}${
                     searchParams.q ? `&q=${searchParams.q}` : ''
                   }`}
                 >
                   <DirectusImage
                     alt={offer.translations?.[0]?.title || ''}
-                    className="max-w-32 w-full h-full object-cover rounded-lg"
+                    className="max-w-24 max-h-24 md:max-w-32 md:max-h-32 w-full h-full object-cover rounded-lg"
                     height={450}
                     item={offer.image}
                     width={300}
                   />
                   <div className="flex flex-col flex-1">
-                    <h2 className="line-clamp-4 flex-1">
+                    <h2 className="line-clamp-4 flex-1 text-sm md:text-base">
                       {offer.translations?.[0]?.title}
                     </h2>
                     {offer.end_date ? (

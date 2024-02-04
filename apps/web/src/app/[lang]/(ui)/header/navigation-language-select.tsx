@@ -43,7 +43,7 @@ const NavigationMenuLanguageSelect = (
           Idioma
         </span>
       </NavigationMenu.Trigger>
-      <NavigationMenu.Content>
+      <NavigationMenu.Content className="md:border md:border-t-0">
         {languanges.map((language) => (
           <NavigationMenu.ItemLink
             className="flex gap-3 items-center"

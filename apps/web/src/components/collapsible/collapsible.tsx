@@ -31,8 +31,8 @@ const CollapsibleTrigger = (
 
   return (
     <button
-      aria-controls={contentId}
-      aria-expanded={open ? 'true' : undefined}
+      aria-controls={open ? contentId : undefined}
+      aria-expanded={open ? 'true' : 'false'}
       onClick={() => setOpen(!open)}
       type="button"
       {...rest}

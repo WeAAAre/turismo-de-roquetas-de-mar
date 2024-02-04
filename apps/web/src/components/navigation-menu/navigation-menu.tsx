@@ -14,6 +14,7 @@ import * as Collapsible from '@/components/collapsible/collapsible';
 
 interface ChildrenProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 interface NavigationMenuProps {
@@ -121,7 +122,7 @@ const NavigationMenuItems = (props: ChildrenProps) => {
         'flex-1 flex flex-col md:flex-auto md:flex-row md:justify-end md:items-center',
         'h-0 md:h-auto transition-[height,margin] overflow-hidden duration-300',
         {
-          'h-[calc(100vh-4.60rem)] mt-10 md:mt-0': open,
+          'h-[calc(100vh-4.60rem)] mt-10 md:mt-0 overflow-auto pb-5': open,
         },
       )}
     >
@@ -160,6 +161,7 @@ interface NavigationMenuItemLinkProps extends ChildrenProps {
 
 const NavigationMenuItemLink = (props: NavigationMenuItemLinkProps) => {
   const { children, href, lang, className, menuItemClassName } = props;
+  const { setOpen } = useNavigationMenuContext();
 
   return (
     <NavigationMenuItem className={menuItemClassName}>
@@ -170,6 +172,7 @@ const NavigationMenuItemLink = (props: NavigationMenuItemLinkProps) => {
         )}
         href={href}
         lang={lang}
+        onClick={() => setOpen(false)}
       >
         {children}
       </Link>
@@ -188,14 +191,23 @@ const NavigationMenuTrigger = (props: ChildrenProps) => {
 };
 
 const NavigationMenuContent = (props: ChildrenProps) => {
-  const { children } = props;
+  const { children, className } = props;
 
   return (
     <Collapsible.Content>
-      <div className="md:fixed md:top-[4.60rem] md:rounded-lg md:w-full md:left-0">
+      <div
+        className={cn(
+          'md:fixed md:top-[4.60rem] md:rounded-lg md:w-full md:left-0',
+        )}
+      >
         <Grid.Root className="md:place-items-end">
           <Grid.Item col="12">
-            <ul className="md:py-2 md:text-black md:text-right md:bg-white/90 md:backdrop-blur md:w-max md:[&>li]:py-2">
+            <ul
+              className={cn(
+                'md:py-2 md:text-black md:text-right md:bg-white/90 md:backdrop-blur md:w-max md:[&>li]:py-2',
+                className,
+              )}
+            >
               {children}
             </ul>
           </Grid.Item>

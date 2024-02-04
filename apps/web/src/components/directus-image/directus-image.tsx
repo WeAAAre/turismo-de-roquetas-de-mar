@@ -8,6 +8,8 @@ type DirectusImageProps = Omit<React.ComponentProps<typeof Image>, 'src'> & {
 
 export interface AssetURLOptions {
   quality?: number;
+  width?: number;
+  next?: boolean;
   format?: 'auto' | 'jpg' | 'png' | 'webp' | 'tiff';
 }
 
@@ -15,13 +17,14 @@ const assetURL = (
   item?: DirectusFile | string | null,
   options?: AssetURLOptions,
 ) => {
-  const { quality, format } = options || {};
+  const { quality, format, width } = options || {};
 
   if (!item) return '';
 
   const params = {
     ...(quality && { quality: quality.toString() }),
     ...(format && { format }),
+    ...(width && { width: width.toString() }),
   };
   const searchParams = new URLSearchParams(params).toString();
 

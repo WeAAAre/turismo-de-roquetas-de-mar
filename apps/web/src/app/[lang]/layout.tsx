@@ -1,3 +1,4 @@
+import PlausibleProvider from 'next-plausible';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 
@@ -27,20 +28,27 @@ const RootLayout = (props: RootLayoutProps) => {
       className={cn('h-full w-full', poppins.variable)}
       lang={transfromLocaleToLang(params.lang)}
     >
-      <link href="/favicon.ico" rel="icon" sizes="any" />
+      <head>
+        <PlausibleProvider
+          customDomain="https://analytics.gisei.es"
+          domain="turismoderoquetasdemar.es"
+          enabled
+          selfHosted
+          trackLocalhost
+        />
+        <link href="/favicon.ico" rel="icon" sizes="any" />
+      </head>
       <body>
         <Header />
         {children}
         <Footer.Root>
-          <Footer.Group>
-            <Image
-              alt="Logo - Turismo Roquetas de Mar"
-              className="w-36 h-32"
-              height={200}
-              src={logo}
-              width={250}
-            />
-          </Footer.Group>
+          <Image
+            alt="Logo - Turismo Roquetas de Mar"
+            className="w-36 h-32"
+            height={200}
+            src={logo}
+            width={250}
+          />
           <Footer.Group>
             <Footer.Link href="/#inicio">Inicio</Footer.Link>
             <Footer.Link href="/#informacion">Información</Footer.Link>

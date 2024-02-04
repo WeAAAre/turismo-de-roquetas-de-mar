@@ -6,7 +6,7 @@ const BusinessContentHeader = (props: BusinessContentHeaderProps) => {
   const { children } = props;
 
   return (
-    <div className="bg-white sticky md:top-[4.6rem] top-[5.04rem] pt-4">
+    <div className="bg-white sticky z-10 md:top-[4.57rem] top-[5.04rem] pt-4 -mx-4 px-4">
       {children}
     </div>
   );

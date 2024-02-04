@@ -37,9 +37,11 @@ const FooterLink = (props: React.ComponentProps<typeof Link>) => {
   const { children, className, ...rest } = props;
 
   return (
-    <Link {...rest} className={cn('hover:text-blue-500/80', className)}>
-      {children}
-    </Link>
+    <li>
+      <Link {...rest} className={cn('hover:text-blue-500/80', className)}>
+        {children}
+      </Link>
+    </li>
   );
 };
 
