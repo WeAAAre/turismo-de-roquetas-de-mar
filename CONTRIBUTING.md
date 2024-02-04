@@ -52,7 +52,7 @@ Resolves #1
 
 The scope should be included most of the time, and all allowed types and scopes are documented here:
 
-- https://github.com/prismaworks/style/blob/main/.commitlintrc.js
+- https://github.com/gisei-studio/turismo-roquetas-de-mar/blob/main/.commitlintrc.js
 
 ### How commits affect versions
 

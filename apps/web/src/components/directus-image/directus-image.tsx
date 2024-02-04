@@ -28,10 +28,10 @@ const assetURL = (
   const id = typeof item === 'string' ? item : item.id;
 
   if (searchParams) {
-    return `https://panel.turismo.prismaworks.es/assets/${id}?${searchParams}`;
+    return `https://console.turismoderoquetasdemar.es/assets/${id}?${searchParams}`;
   }
 
-  return `https://panel.turismo.prismaworks.es/assets/${id}`;
+  return `https://console.turismoderoquetasdemar.es/assets/${id}`;
 };
 
 const getBlurDataURL = () => {

@@ -1,7 +1,7 @@
 {
   "name": "@gisei-studio/turismo-de-roquetas-de-mar",
   "version": "0.0.0",
-  "description": "Template for a mono repo for a Prisma projects",
+  "description": "Set of applicacions for Turismo de Roquetas de Mar",
   "homepage": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar",
   "bugs": {
     "url": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/issues"

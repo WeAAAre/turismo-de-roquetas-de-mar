@@ -13,16 +13,11 @@ const nextConfig = withBundleAnalyzer({
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.prismaworks.es',
+        hostname: '**.turismoderoquetasdemar.es',
       },
     ],
     dangerouslyAllowSVG: true,
   },
-  // logging: {
-  //     fetches: {
-  //         fullUrl: true
-  //     }
-  // }
 });
 
 export default nextConfig;
