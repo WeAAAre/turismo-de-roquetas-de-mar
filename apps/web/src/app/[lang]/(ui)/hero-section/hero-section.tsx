@@ -55,7 +55,7 @@ const HeroSection = async (props: HeroSectionProps) => {
 
   return (
     <div className="relative">
-      <Grid.Root className="h-screen">
+      <Grid.Root className="h-screen flex flex-col justify-center">
         <div>
           <BackgroundCarousel
             images={images}
