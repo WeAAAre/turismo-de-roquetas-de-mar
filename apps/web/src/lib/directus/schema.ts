@@ -4266,6 +4266,27 @@ export interface TermsConditionsPageTranslation {
   title: string | null;
 }
 
+export interface FeatureFlags {
+  features: {
+    name: string;
+    value: boolean;
+  }[];
+}
+
+export interface BlogPost {
+  title: string;
+  status: 'published' | 'draft' | 'archived';
+  image: DirectusFile | DirectusFile['id'];
+  content: unknown;
+  sort: number;
+  date_created: string;
+  date_updated: string;
+  categories: string[] | null;
+  id: number;
+  sluglify: string;
+  description: string;
+}
+
 export type Collections = {
   app_translation: AppTranslation[];
   app_translation_entry: AppTranslationEntry[];
@@ -4278,6 +4299,7 @@ export type Collections = {
   business_files_1: BusinessFiles1[];
   business_translations: BusinessTranslation[];
   category: Category[];
+  blog_post: BlogPost[];
   category_translations: CategoryTranslation[];
   collaborator: Collaborator[];
   directus_activity: DirectusActivity[];
@@ -4313,6 +4335,7 @@ export type Collections = {
   ideas_offers_translations: IdeasOffersTranslation[];
   junction_directus_files_translations: JunctionDirectusFilesTranslation[];
   languages: Language[];
+  features_flags: FeatureFlags;
   privacy_policy_page: PrivacyPolicyPage[];
   privacy_policy_page_translations: PrivacyPolicyPageTranslation[];
   renovations: Renovation[];

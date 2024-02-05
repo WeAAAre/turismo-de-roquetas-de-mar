@@ -55,11 +55,12 @@ const RootLayout = (props: RootLayoutProps) => {
             <Footer.Link href="/#negocios">Negocios</Footer.Link>
             <Footer.Link href="/#colaboradores">Colaboradores</Footer.Link>
             <Footer.Link href="/eventos">Eventos</Footer.Link>
+          </Footer.Group>
+          <Footer.Group>
             <Footer.Link href="/ofertas">
               Ofertas e ideas para disfrutar
             </Footer.Link>
-          </Footer.Group>
-          <Footer.Group>
+            <Footer.Link href="/blog">Blog</Footer.Link>
             <Footer.Link href="/terminos-y-condiciones">
               Términos y condiciones
             </Footer.Link>

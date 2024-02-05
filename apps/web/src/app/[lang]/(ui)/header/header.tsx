@@ -16,9 +16,10 @@ const Header = () => {
           src={logo as never}
         />
         <NavigationMenu.Items>
-          <NavigationMenu.ItemLink href="/#inicio">
+          <NavigationMenu.ItemLink href="/" menuItemClassName="md:hidden">
             Inicio
           </NavigationMenu.ItemLink>
+
           <NavigationMenu.ItemLink href="/#informacion">
             Información
           </NavigationMenu.ItemLink>
@@ -28,6 +29,7 @@ const Header = () => {
           <NavigationMenu.ItemLink href="/#colaboradores">
             Colaboradores
           </NavigationMenu.ItemLink>
+          <NavigationMenu.ItemLink href="/blog">Blog</NavigationMenu.ItemLink>
           <NavigationMenu.ItemLink
             href="/eventos"
             menuItemClassName="md:hidden"

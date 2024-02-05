@@ -20,11 +20,11 @@ const NavigationMenuLanguageSelect = (
   props: NavigationMenuLanguageSelectProps,
 ) => {
   const { languanges } = props;
-  const patname = usePathname();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const getURL = (code: string) => {
-    const realPathname = patname.split('/').slice(2).join('/');
+    const realPathname = pathname.split('/').slice(2).join('/');
     const search = new URLSearchParams(searchParams);
     const baseURL = `/${code}/${realPathname}`;
 
@@ -34,6 +34,10 @@ const NavigationMenuLanguageSelect = (
 
     return `${baseURL}?${search.toString()}`;
   };
+
+  const secondToken = pathname.split('/')[2];
+
+  if (secondToken === 'blog') return null;
 
   return (
     <NavigationMenu.Item submenu>
