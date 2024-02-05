@@ -10,10 +10,6 @@ interface BusinessSectionProps {
   lang: string;
 }
 
-const getBusinessHref = (item: { sluglify: string | null }) => {
-  return `/${item.sluglify}`;
-};
-
 const BusinessSection = async (props: BusinessSectionProps) => {
   const { lang } = props;
 
@@ -41,6 +37,10 @@ const BusinessSection = async (props: BusinessSectionProps) => {
       },
     }),
   );
+
+  const getBusinessHref = (item: { sluglify: string | null }) => {
+    return `/${lang}/${item.sluglify}`;
+  };
 
   return (
     <Grid.Root>

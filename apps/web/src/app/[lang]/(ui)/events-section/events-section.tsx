@@ -13,9 +13,6 @@ interface EventsSectionProps {
   lang: string;
 }
 
-const getEventLink = (event: { sluglify: string | null }) =>
-  `/eventos/${event.sluglify}`;
-
 const EventsSection = async (props: EventsSectionProps) => {
   const { lang } = props;
   const result = await directus.request(
@@ -52,6 +49,9 @@ const EventsSection = async (props: EventsSectionProps) => {
   const secondaryEvents = result.slice(1);
 
   if (!mainEvent) return null;
+
+  const getEventLink = (event: { sluglify: string | null }) =>
+    `/${lang}/eventos/${event.sluglify}`;
 
   return (
     <Grid.Root>
@@ -131,7 +131,7 @@ const EventsSection = async (props: EventsSectionProps) => {
           <li>
             <Link
               className="flex gap-4 text-2xl font-semibold py-5 justify-center items-center h-full border-t border-r hover:bg-blue-100/30"
-              href="/eventos"
+              href={`/${lang}/eventos`}
             >
               Ver más eventos
               <ArrowRightIcon aria-hidden />

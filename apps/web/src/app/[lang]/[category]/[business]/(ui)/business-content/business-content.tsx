@@ -15,7 +15,7 @@ const BusinessContent = (props: BusinessContentProps) => {
   const { children } = props;
 
   return (
-    <div className="bg-white px-4 pb-4 rounded-lg border flex flex-col gap-4">
+    <div className="bg-white px-4 pb-4 rounded-lg border overflow-hidden flex flex-col gap-4">
       {children}
     </div>
   );

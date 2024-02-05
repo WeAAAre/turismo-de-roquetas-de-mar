@@ -12,8 +12,6 @@ interface OffersSectionProps {
   lang: string;
 }
 
-const getOfferLink = (offer: { id: number }) => `/ofertas?p=${offer.id}`;
-
 const OffersSection = async (props: OffersSectionProps) => {
   const { lang } = props;
 
@@ -46,6 +44,9 @@ const OffersSection = async (props: OffersSectionProps) => {
     }),
   );
 
+  const getOfferLink = (offer: { id: number }) =>
+    `/${lang}/ofertas?p=${offer.id}`;
+
   return (
     <Grid.Root className="px-0">
       <Grid.Item className="px-5" col="12">
@@ -71,7 +72,7 @@ const OffersSection = async (props: OffersSectionProps) => {
               </OfferCard.Content>
             </OfferCard.Root>
           ))}
-          <OfferCard.Root href="/ofertas">
+          <OfferCard.Root href={`/${lang}/ofertas`}>
             <OfferCard.Content>
               <h3 className="flex h-full items-center font-medium text-lg first-letter:uppercase">
                 Ver todas las ofertas

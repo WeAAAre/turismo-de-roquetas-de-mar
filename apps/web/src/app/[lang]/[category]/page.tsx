@@ -151,6 +151,7 @@ const CategoryPage = async (props: CategoryPageProps) => {
         <Grid.Item className="mt-6" col="12">
           <CategoryList
             categoryType={category?.[0]?.type}
+            lang={lang}
             query={query}
             sluglify={sluglify}
             sortBy={category?.[0]?.sort_by || 'name'}

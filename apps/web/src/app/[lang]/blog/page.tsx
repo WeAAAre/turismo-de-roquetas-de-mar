@@ -37,14 +37,15 @@ export async function generateMetadata() {
       title: 'Blog - Turismo Roquetas de Mar',
       description:
         'Explora Roquetas de Mar con nuestro blog de turismo. Descubre playas doradas, paisajes encantadores y experiencias únicas. Encuentra consejos de viaje y recomendaciones locales para planificar tu escapada perfecta. ¡Bienvenido a la magia de Roquetas de Mar!',
-      url: 'https://turismoroquetasdemar.com/blog',
+      url: 'https://turismoroquetasdemar.com/es-ES/blog',
       siteName: 'Turismo Roquetas de Mar',
       images: image ? assetURL(image) : undefined,
     },
   } satisfies Metadata;
 }
 
-const getPostLink = (item: { sluglify: string }) => `/blog/${item.sluglify}`;
+const getPostLink = (item: { sluglify: string }) =>
+  `/es-ES/blog/${item.sluglify}`;
 
 const BlogPage = async () => {
   const data = await directus.request(

@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
       type: 'article',
       title: postItem.title,
       description: postItem.description,
-      url: `https://turismoroquetasdemar.com/blog/${post}`,
+      url: `https://turismoroquetasdemar.com/es-ES/blog/${post}`,
       siteName: 'Turismo Roquetas de Mar',
       images: postItem.image ? [assetURL(postItem.image as string)] : undefined,
     },

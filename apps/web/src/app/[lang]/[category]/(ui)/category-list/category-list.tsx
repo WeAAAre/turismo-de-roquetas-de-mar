@@ -16,6 +16,7 @@ interface CategoryListProps {
   categoryType: 'business' | 'site' | null | undefined;
   sortBy: string;
   sortMode: string;
+  lang: string;
 }
 
 function RNG(seed: number) {
@@ -28,7 +29,7 @@ function RNG(seed: number) {
 }
 
 const CategoryList = async (props: CategoryListProps) => {
-  const { sluglify, query, sortBy, categoryType, sortMode } = props;
+  const { sluglify, query, sortBy, lang, categoryType, sortMode } = props;
 
   const sortSign = sortMode === 'asc' ? '' : '-';
   const data = await directus.request(
@@ -84,7 +85,7 @@ const CategoryList = async (props: CategoryListProps) => {
     data.sort(() => random() - 0.5);
   }
 
-  const getItemLink = (slug: string | null) => `/${sluglify}/${slug}`;
+  const getItemLink = (slug: string | null) => `/${lang}/${sluglify}/${slug}`;
 
   return (
     <ul className="grid auto-rows-[1fr] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

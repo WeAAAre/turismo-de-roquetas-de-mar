@@ -7,7 +7,15 @@ import * as NavigationMenu from '@/components/navigation-menu/navigation-menu';
 import NavigationMenuLanguageSelect from './navigation-language-select';
 import logo from './logo.webp';
 
-const Header = () => {
+interface HeaderProps {
+  lang: string;
+}
+
+const Header = (props: HeaderProps) => {
+  const { lang } = props;
+
+  const getHeaderLink = (href: string) => `/${lang}${href}`;
+
   return (
     <header className="fixed w-full top-0 z-[999999]">
       <NavigationMenu.Root ariaLabel="Menú principal">
@@ -16,28 +24,33 @@ const Header = () => {
           src={logo as never}
         />
         <NavigationMenu.Items>
-          <NavigationMenu.ItemLink href="/" menuItemClassName="md:hidden">
+          <NavigationMenu.ItemLink
+            href={getHeaderLink('/')}
+            menuItemClassName="md:hidden"
+          >
             Inicio
           </NavigationMenu.ItemLink>
 
-          <NavigationMenu.ItemLink href="/#informacion">
+          <NavigationMenu.ItemLink href={getHeaderLink('/#informacion')}>
             Información
           </NavigationMenu.ItemLink>
-          <NavigationMenu.ItemLink href="/#negocios">
+          <NavigationMenu.ItemLink href={getHeaderLink('/#negocios')}>
             Negocios
           </NavigationMenu.ItemLink>
-          <NavigationMenu.ItemLink href="/#colaboradores">
+          <NavigationMenu.ItemLink href={getHeaderLink('/#colaboradores')}>
             Colaboradores
           </NavigationMenu.ItemLink>
-          <NavigationMenu.ItemLink href="/blog">Blog</NavigationMenu.ItemLink>
+          <NavigationMenu.ItemLink href={getHeaderLink('/blog')}>
+            Blog
+          </NavigationMenu.ItemLink>
           <NavigationMenu.ItemLink
-            href="/eventos"
+            href={getHeaderLink('/eventos')}
             menuItemClassName="md:hidden"
           >
             Eventos
           </NavigationMenu.ItemLink>
           <NavigationMenu.ItemLink
-            href="/ofertas"
+            href={getHeaderLink('/ofertas')}
             menuItemClassName="md:hidden"
           >
             Ofertas e ideas para disfrutar

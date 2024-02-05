@@ -4,7 +4,6 @@ import { readItems } from '@directus/sdk';
 import { directus } from '@/lib/directus/server';
 import type { DirectusFile } from '@/lib/directus/schema';
 import * as Grid from '@/components/grid/grid';
-import { assetURL } from '@/components/directus-image/directus-image';
 
 import generateSeoMetadata from '../../(helpers)/generate-seo-metadata';
 import BusinessInfo from './(ui)/business-info/business-info';
@@ -246,9 +245,7 @@ const BusinessPage = async (props: BusinessPageProps) => {
                 <BusinessContent.PDFs
                   pdfs={item.pdfs?.map((pdf) => pdf.directus_files_id)}
                 />
-                <BusinessContent.Image360
-                  src={`/_next/image?url=${encodeURIComponent(assetURL(item.image360))}&w=2700&q=75`}
-                />
+                <BusinessContent.Image360 src={item.image360 as string} />
               </>
             )}
             {activeTab === 'gallery' && (

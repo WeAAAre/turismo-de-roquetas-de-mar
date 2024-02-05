@@ -10,10 +10,6 @@ interface PlacesSectionProps {
   lang: string;
 }
 
-const getPlacesHref = (item: { sluglify: string | null }) => {
-  return `/${item.sluglify}`;
-};
-
 const PlacesSection = async (props: PlacesSectionProps) => {
   const { lang } = props;
 
@@ -42,6 +38,10 @@ const PlacesSection = async (props: PlacesSectionProps) => {
       },
     }),
   );
+
+  const getPlacesHref = (item: { sluglify: string | null }) => {
+    return `/${lang}/${item.sluglify}`;
+  };
 
   return (
     <Grid.Root>

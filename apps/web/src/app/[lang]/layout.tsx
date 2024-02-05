@@ -1,4 +1,5 @@
 import PlausibleProvider from 'next-plausible';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 
@@ -21,12 +22,19 @@ interface RootLayoutProps {
 }
 
 const RootLayout = (props: RootLayoutProps) => {
-  const { children, params } = props;
+  const {
+    children,
+    params: { lang },
+  } = props;
+
+  if (!lang) return notFound();
+
+  const getFooterLink = (href: string) => `/${lang}${href}`;
 
   return (
     <html
       className={cn('h-full w-full', poppins.variable)}
-      lang={transfromLocaleToLang(params.lang)}
+      lang={transfromLocaleToLang(lang)}
     >
       <head>
         <PlausibleProvider
@@ -39,7 +47,7 @@ const RootLayout = (props: RootLayoutProps) => {
         <link href="/favicon.ico" rel="icon" sizes="any" />
       </head>
       <body>
-        <Header />
+        <Header lang={lang} />
         {children}
         <Footer.Root>
           <Image
@@ -50,21 +58,33 @@ const RootLayout = (props: RootLayoutProps) => {
             width={250}
           />
           <Footer.Group>
-            <Footer.Link href="/#inicio">Inicio</Footer.Link>
-            <Footer.Link href="/#informacion">Información</Footer.Link>
-            <Footer.Link href="/#negocios">Negocios</Footer.Link>
-            <Footer.Link href="/#colaboradores">Colaboradores</Footer.Link>
-            <Footer.Link href="/eventos">Eventos</Footer.Link>
+            <Footer.Link href={getFooterLink('/#inicio')}>Inicio</Footer.Link>
+            <Footer.Link href={getFooterLink('/#informacion')}>
+              Información
+            </Footer.Link>
+            <Footer.Link href={getFooterLink('/#negocios')}>
+              Negocios
+            </Footer.Link>
+            <Footer.Link href={getFooterLink('/#colaboradores')}>
+              Colaboradores
+            </Footer.Link>
+            <Footer.Link href={getFooterLink('/eventos')}>Eventos</Footer.Link>
           </Footer.Group>
           <Footer.Group>
-            <Footer.Link href="/ofertas">
+            <Footer.Link href={getFooterLink('/ofertas')}>
               Ofertas e ideas para disfrutar
             </Footer.Link>
-            <Footer.Link href="/blog">Blog</Footer.Link>
-            <Footer.Link href="/terminos-y-condiciones">
+            <Footer.Link href={getFooterLink('/blog')}>Blog</Footer.Link>
+            <Footer.Link
+              href={getFooterLink('/terminos-y-condiciones')}
+              prefetch={false}
+            >
               Términos y condiciones
             </Footer.Link>
-            <Footer.Link href="/politica-de-privacidad">
+            <Footer.Link
+              href={getFooterLink('/politica-de-privacidad')}
+              prefetch={false}
+            >
               Política de privacidad
             </Footer.Link>
             <Footer.Link href="mailto:info@turismoderoquetasdemar.es">

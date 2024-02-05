@@ -7,6 +7,7 @@ import { generateStaticParams as homeStaticParams } from './[lang]/page';
 import { generateStaticParams as offersStaticParams } from './[lang]/ofertas/page';
 import { generateStaticParams as eventsStaticParams } from './[lang]/eventos/page';
 import { generateStaticParams as eventStaticParams } from './[lang]/eventos/[event]/page';
+import { generateStaticParams as postStaticParams } from './[lang]/blog/[post]/page';
 import { generateStaticParams as categoryStaticParams } from './[lang]/[category]/page';
 import { generateStaticParams as businessStaticParams } from './[lang]/[category]/[business]/page';
 
@@ -56,6 +57,11 @@ const config = {
     priority: 0.85,
     changeFrequency: 'weekly',
   },
+  post: {
+    build: (lang: string, post: string) => `/${lang}/blog/${post}`,
+    priority: 0.9,
+    changeFrequency: 'weekly',
+  },
 } as const;
 
 const byPurgeLanguages = (params?: { lang: string }) =>
@@ -83,6 +89,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     policy,
     category,
     business,
+    post,
   ] = await Promise.all([
     homeStaticParams(),
     offersStaticParams(),
@@ -92,6 +99,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     policyStaticParams(),
     categoryStaticParams(),
     businessStaticParams(),
+    postStaticParams(),
   ]);
 
   return [
@@ -105,5 +113,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     policy.filter(byPurgeLanguages).map(toSitemap(config.policy)),
     category.filter(byPurgeLanguages).map(toSitemap(config.category)),
     business.filter(byPurgeLanguages).map(toSitemap(config.business)),
+    post.filter(byPurgeLanguages).map(toSitemap(config.post)),
   ].flat();
 }
