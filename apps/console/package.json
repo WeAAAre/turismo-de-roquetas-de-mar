@@ -17,7 +17,8 @@
     "bootstrap": "directus bootstrap",
     "database:update": "directus database migrate:latest",
     "dev": "directus start",
-    "generate:schema": "directus models snapshot ../web/src/lib/directus/schema.ts"
+    "generate:schema": "directus models snapshot ../web/src/lib/directus/schema.ts",
+    "start": "pnpm run database:update && directus start"
   },
   "dependencies": {
     "@gisei-studio/directus-extension-mapbox-operation": "workspace:*",
@@ -25,7 +26,7 @@
     "@gisei-studio/directus-extension-slug-interface": "workspace:*",
     "@gisei-studio/directus-extension-translate-operation": "workspace:*",
     "@img/sharp-win32-x64": "0.33.2",
-    "directus": "10.8.3",
+    "directus": "10.9.0",
     "directus-extension-models": "2.5.2",
     "mysql": "2.18.1"
   },

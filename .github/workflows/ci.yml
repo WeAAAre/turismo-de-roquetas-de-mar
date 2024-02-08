@@ -8,9 +8,8 @@ on:
       - 'develop'
 env:
   NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
-  COOLIFY_WEBHOOK_CONSOLE: ${{ secrets.COOLIFY_WEBHOOK_CONSOLE }}
-  COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+  DEPLOY_WEBHOOK_WEB: ${{ secrets.DEPLOY_WEBHOOK_WEB }}
+  DEPLOY_WEBHOOK_CONSOLE: ${{ secrets.DEPLOY_WEBHOOK_CONSOLE }}
 
 jobs:
   commitlint:
@@ -85,15 +84,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ env.NPM_TOKEN }}
 
-  deploy:
-    name: Deploy turismoderoquetasdemar.es
-    needs: [release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Coolify
-        run: |
-          curl --request GET '${{ env.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'
-
   deploy_console:
     name: Deploy console.turismoderoquetasdemar.es
     needs: [release]
@@ -101,4 +91,13 @@ jobs:
     steps:
       - name: Deploy to Coolify
         run: |
-          curl --request GET '${{ env.COOLIFY_WEBHOOK_CONSOLE }}' --header 'Authorization: Bearer ${{ env.COOLIFY_TOKEN }}'
+          curl --request GET '${{ env.DEPLOY_WEBHOOK_CONSOLE }}'
+
+  deploy:
+    name: Deploy turismoderoquetasdemar.es
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ env.DEPLOY_WEBHOOK_WEB }}'

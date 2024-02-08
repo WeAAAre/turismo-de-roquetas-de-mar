@@ -2,7 +2,7 @@
     <private-view smallHeader headerShadow>
 		<iframe 
 			plausible-embed 
-			src="https://analytics.gisei.es/share/turismoderoquetasdemar.es?auth=XxVdXno21TJvwvuIoVJhE&embed=true&theme=light&background=transparent" 
+			:src="src"
 			scrolling="no" 
 			frameborder="0" 
 			loading="lazy" 
@@ -24,6 +24,15 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'PlausiblePanel',
+	data() {
+		const auth = 'OMTfaO6DF3RI-muj5t9NF';
+		const analyticsDomain = 'analytics.gisei.es';
+		const target = 'turismoderoquetasdemar.es';
+
+		return {
+			src: `https://${analyticsDomain}/share/${target}?auth=${auth}&embed=true&theme=light&background=transparent`,
+		}
+	},
 	setup() {
 		return {};
 	},
