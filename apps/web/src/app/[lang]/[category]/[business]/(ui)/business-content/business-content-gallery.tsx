@@ -32,14 +32,16 @@ const BusinessContentGallery = (props: BusinessContentGalleryProps) => {
       <PhotoAlbum
         defaultContainerWidth={600}
         layout="masonry"
-        photos={images.map((img) => ({
-          key: img.id,
-          height: img.height,
-          width: img.width,
-          src: img.id,
-          alt: img.title || '',
-          id: img.id,
-        }))}
+        photos={images
+          .filter((i) => i?.id)
+          .map((img) => ({
+            key: img.id,
+            height: img.height,
+            width: img.width,
+            src: img.id,
+            alt: img.title || '',
+            id: img.id,
+          }))}
         renderPhoto={({ photo }) => (
           <button
             className="mt-2"
@@ -49,9 +51,9 @@ const BusinessContentGallery = (props: BusinessContentGalleryProps) => {
             <DirectusImage
               alt={photo.alt}
               className="rounded-lg"
-              height={300}
+              height={photo.height}
               item={photo.src}
-              width={300}
+              width={photo.width}
             />
           </button>
         )}

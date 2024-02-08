@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-import { assetURL } from '@/components/directus-image/directus-image';
+import { assetURL } from '@/components/directus-image/asset-url';
 
 const Image360 = dynamic(() => import('@/components/image360/image360'), {
   ssr: false,

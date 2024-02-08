@@ -8,9 +8,8 @@ import { directus } from '@/lib/directus/server';
 import type { DirectusFile } from '@/lib/directus/schema';
 import { env } from '@/env/server.mjs';
 import RichText from '@/components/rich-text/rich-text';
-import DirectusImage, {
-  assetURL,
-} from '@/components/directus-image/directus-image';
+import DirectusImage from '@/components/directus-image/directus-image';
+import { assetURL } from '@/components/directus-image/asset-url';
 
 import CategoriesTags from '../(ui)/categories-tags/categories-tags';
 

@@ -1,6 +1,6 @@
 import type DirectusImage from '@/components/directus-image/directus-image';
 import type { AssetURLOptions } from '@/components/directus-image/directus-image';
-import { assetURL } from '@/components/directus-image/directus-image';
+import { assetURL } from '@/components/directus-image/asset-url';
 
 interface BusinessContentPdfsProps {
   pdfs?: React.ComponentProps<typeof DirectusImage>['item'][] | null;

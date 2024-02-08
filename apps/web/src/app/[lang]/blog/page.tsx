@@ -5,9 +5,8 @@ import { readItems } from '@directus/sdk';
 import { directus } from '@/lib/directus/server';
 import type { DirectusFile } from '@/lib/directus/schema';
 import * as Grid from '@/components/grid/grid';
-import DirectusImage, {
-  assetURL,
-} from '@/components/directus-image/directus-image';
+import DirectusImage from '@/components/directus-image/directus-image';
+import { assetURL } from '@/components/directus-image/asset-url';
 
 import CategoriesTags from './(ui)/categories-tags/categories-tags';
 
