@@ -105,7 +105,7 @@ const CategoryList = async (props: CategoryListProps) => {
               />
               <ShareButton
                 className="absolute text-white top-2 right-2 flex justify-center items-center bg-[#333232] rounded-full p-2 hover:bg-opacity-80 transition-colors duration-300 ease-in-out"
-                href={item.redirect_to ?? getItemLink(item.sluglify)}
+                href={item.redirect_to ?? item.sluglify ?? ''}
                 name={item.name || 'Compartir'}
               >
                 <ShareIcon aria-hidden />
