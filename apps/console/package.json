@@ -18,7 +18,7 @@
     "database:update": "directus database migrate:latest",
     "dev": "directus start",
     "generate:schema": "directus models snapshot ../web/src/lib/directus/schema.ts",
-    "start": "pnpm run database:update && directus start"
+    "start": "directus start"
   },
   "dependencies": {
     "@gisei-studio/directus-extension-mapbox-operation": "workspace:*",
