@@ -19,6 +19,15 @@ const nextConfig = withBundleAnalyzer({
     ],
     dangerouslyAllowSVG: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/es/edificio-de-usos-multiples-las-marinas',
+        destination: '/es-ES/gestion-municipal/edificio-de-usos-multiples-las-marinas',
+        permanent: true
+      }
+    ]
+  }
 });
 
 export default nextConfig;
