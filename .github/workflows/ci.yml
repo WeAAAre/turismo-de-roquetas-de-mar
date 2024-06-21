@@ -89,7 +89,7 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Coolify
+      - name: Deploy to Easypanel
         run: |
           curl --request GET '${{ env.DEPLOY_WEBHOOK_CONSOLE }}'
 
@@ -98,6 +98,6 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Coolify
+      - name: Deploy to Easypanel
         run: |
           curl --request GET '${{ env.DEPLOY_WEBHOOK_WEB }}'

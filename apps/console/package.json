@@ -26,7 +26,7 @@
     "@gisei-studio/directus-extension-slug-interface": "workspace:*",
     "@gisei-studio/directus-extension-translate-operation": "workspace:*",
     "@img/sharp-win32-x64": "0.33.2",
-    "directus": "10.10.4",
+    "directus": "10.12.1",
     "directus-extension-models": "2.5.2",
     "mysql": "2.18.1"
   },
