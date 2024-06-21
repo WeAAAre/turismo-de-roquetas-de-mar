@@ -1,5 +1,5 @@
 {
-  "name": "@gisei-studio/turismo-de-roquetas-de-mar",
+  "name": "@weaaare/turismo-de-roquetas-de-mar",
   "version": "0.0.0",
   "description": "Set of applicacions for Turismo de Roquetas de Mar",
   "homepage": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar",
@@ -23,19 +23,19 @@
     "prepare": "husky install",
     "publish:packages": "turbo build --filter=./packages/* && changeset version && changeset publish"
   },
-  "prettier": "@gisei-studio/style/prettier",
+  "prettier": "@weaaare/style/prettier",
   "devDependencies": {
     "@changesets/cli": "2.27.1",
     "@commitlint/cli": "18.4.3",
     "@commitlint/config-conventional": "18.4.3",
-    "@gisei-studio/style": "0.0.0",
+    "@weaaare/style": "0.0.0",
     "eslint": "8.56.0",
     "husky": "8.0.3",
     "prettier": "3.2.4",
     "rimraf": "5.0.5",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@9.3.0",
   "publishConfig": {
     "access": "restricted",
     "registry": "https://npm.pkg.github.com"

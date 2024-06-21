@@ -11,11 +11,11 @@ const project = resolve(__dirname, 'tsconfig.json');
 module.exports = {
   root: true,
   extends: [
-    '@gisei-studio/style/eslint/browser',
-    '@gisei-studio/style/eslint/node',
-    '@gisei-studio/style/eslint/typescript',
-    '@gisei-studio/style/eslint/react',
-    '@gisei-studio/style/eslint/next',
+    '@weaaare/style/eslint/browser',
+    '@weaaare/style/eslint/node',
+    '@weaaare/style/eslint/typescript',
+    '@weaaare/style/eslint/react',
+    '@weaaare/style/eslint/next',
   ].map(require.resolve),
   parserOptions: {
     project,

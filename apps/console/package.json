@@ -1,5 +1,5 @@
 {
-  "name": "@gisei-studio/turismo-de-roquetas-de-mar-console",
+  "name": "@weaaare/turismo-de-roquetas-de-mar-console",
   "version": "0.0.0",
   "description": "Console for Turismo Roquetas de Mar",
   "homepage": "https://github.com/gisei-studio/turismo-de-roquetas-de-mar/apps/console",
@@ -21,11 +21,11 @@
     "start": "directus start"
   },
   "dependencies": {
-    "@gisei-studio/directus-extension-mapbox-operation": "workspace:*",
-    "@gisei-studio/directus-extension-plausible-panel-turismo-roquetas-de-mar": "workspace:*",
-    "@gisei-studio/directus-extension-slug-interface": "workspace:*",
-    "@gisei-studio/directus-extension-translate-operation": "workspace:*",
     "@img/sharp-win32-x64": "0.33.2",
+    "@weaaare/directus-extension-mapbox-operation": "workspace:*",
+    "@weaaare/directus-extension-plausible-panel-turismo-roquetas-de-mar": "workspace:*",
+    "@weaaare/directus-extension-slug-interface": "workspace:*",
+    "@weaaare/directus-extension-translate-operation": "workspace:*",
     "directus": "10.12.1",
     "directus-extension-models": "2.5.2",
     "mysql": "2.18.1"

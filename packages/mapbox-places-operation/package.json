@@ -1,5 +1,5 @@
 {
-  "name": "@gisei-studio/directus-extension-mapbox-operation",
+  "name": "@weaaare/directus-extension-mapbox-operation",
   "version": "0.0.0",
   "description": "Mapbox Places operation for request name of place",
   "keywords": [

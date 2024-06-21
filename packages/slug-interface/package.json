@@ -1,5 +1,5 @@
 {
-  "name": "@gisei-studio/directus-extension-slug-interface",
+  "name": "@weaaare/directus-extension-slug-interface",
   "version": "0.0.0",
   "description": "Slug interface for Directus",
   "keywords": [

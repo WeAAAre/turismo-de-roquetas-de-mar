@@ -1,5 +1,5 @@
 {
-  "name": "@gisei-studio/directus-extension-translate-operation",
+  "name": "@weaaare/directus-extension-translate-operation",
   "version": "0.0.0",
   "description": "Libretranslate operation for automatic translation of records",
   "keywords": [

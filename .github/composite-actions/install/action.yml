@@ -17,7 +17,7 @@ runs:
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 20
 
     - name: Set NPM_TOKEN env
       shell: bash
@@ -29,7 +29,7 @@ runs:
     - uses: pnpm/action-setup@v2
       name: Install pnpm
       with:
-        version: 8
+        version: 9.3.0
         run_install: false
       
     - name: Get pnpm store directory

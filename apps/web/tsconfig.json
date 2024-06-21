@@ -1,5 +1,5 @@
 {
-  "extends": "@gisei-studio/style/typescript",
+  "extends": "@weaaare/style/typescript",
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
