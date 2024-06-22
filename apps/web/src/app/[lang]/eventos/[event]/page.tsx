@@ -1,10 +1,13 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { AiOutlineArrowRight as ArrowRightComplete } from '@react-icons/all-files/ai/AiOutlineArrowRight';
+import { CalendarIcon, ClockIcon } from '@radix-ui/react-icons';
 import { readItems } from '@directus/sdk';
 
 import { cn } from '@/lib/utils';
 import { directus } from '@/lib/directus/server';
+import type { Event } from '@/lib/directus/schema';
 import RichText from '@/components/rich-text/rich-text';
 import * as Grid from '@/components/grid/grid';
 import DirectusImage from '@/components/directus-image/directus-image';
@@ -105,8 +108,8 @@ export async function generateMetadata({ params }: EventPageProps) {
         !seo || seo?.translations?.length === 0
           ? [{ title: data[0]?.translations?.[0]?.name || '' }]
           : seo?.translations,
-    },
-    { images: data[0]?.image },
+    } as never,
+    { images: data[0]?.image, url: `/${lang}/eventos/${sluglify}` },
   );
 }
 
@@ -127,6 +130,11 @@ const EventPage = async (props: EventPageProps) => {
         {
           image: ['id', 'title'],
         },
+        'date',
+        'type',
+        'date_complete',
+        'start_date',
+        'end_date',
         'price',
         'address',
         'link',
@@ -135,9 +143,6 @@ const EventPage = async (props: EventPageProps) => {
         },
       ],
       filter: {
-        date: {
-          _gte: new Date().toISOString(),
-        },
         sluglify: {
           _eq: sluglify,
         },
@@ -161,39 +166,47 @@ const EventPage = async (props: EventPageProps) => {
   return (
     <main className="bg-[rgb(105,98,109)]/10 pt-24 pb-10">
       <Grid.Root>
-        <Grid.Item className="md:mx-20" col="12">
+        <Grid.Item className="lg:mx-20" col="12">
           <div className="p-4 border rounded-lg  bg-white ">
             <div className="grid grid-cols-6 gap-4">
               <div className="col-span-6 md:col-span-4 order-1 md:order-0">
-                <h1 className="text-3xl font-bold mb-5">{name}</h1>
+                <h1 className="text-2xl md:text-3xl font-semibold">{name}</h1>
+                <div className="py-4 border-y my-4">
+                  <DetailEvent {...event} />
+                </div>
                 {content ? (
-                  <RichText className="prose-sm max-w-none">{content}</RichText>
+                  <div className="grid gap-4">
+                    <h2 className="text-lg font-medium">Descripción</h2>
+                    <RichText className="prose-sm max-w-none">
+                      {content}
+                    </RichText>
+                  </div>
                 ) : null}
               </div>
-              <div className="relative col-span-6 md:col-span-2 min-h-96 h-full order-0 md:order-1">
+              <div className="col-span-6 md:col-span-2 md:order-1 h-full">
                 <DirectusImage
                   alt={name || ''}
-                  className="object-cover rounded-lg border"
-                  fill
+                  className="object-cover rounded-lg border aspect-square mx-auto"
+                  height={500}
                   item={event.image}
+                  width={500}
                 />
+                <div className="mt-6 rounded-lg border overflow-hidden h-56 hidden lg:block">
+                  <Map
+                    defaultCenter={[36.76419, -2.61475]}
+                    disableStartOpen
+                    height="100%"
+                    items={[
+                      {
+                        coordinates: event.address?.coordinates,
+                        name: name || '',
+                        image: event.image.id,
+                      },
+                    ]}
+                    zoom={16}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="mt-6 rounded-lg border overflow-hidden h-96 md:mx-20">
-              <Map
-                defaultCenter={[36.76419, -2.61475]}
-                disableStartOpen
-                height="100%"
-                items={[
-                  {
-                    coordinates: event.address?.coordinates,
-                    name: name || '',
-                    address: '',
-                    image: event.image.id,
-                  },
-                ]}
-                zoom={16}
-              />
             </div>
           </div>
         </Grid.Item>
@@ -234,6 +247,116 @@ const EventPage = async (props: EventPageProps) => {
         </div>
       ) : null}
     </main>
+  );
+};
+
+interface DetailEventProps {
+  type: Event['type'];
+  start_date: Event['start_date'];
+  end_date: Event['end_date'];
+  date_complete: Event['date_complete'];
+  date: Event['date'];
+  address: Event['address'];
+}
+
+const DetailEvent = (props: DetailEventProps) => {
+  const {
+    type,
+    start_date: startDate,
+    end_date: endDate,
+    date_complete: dateComplete,
+    date,
+    address,
+  } = props;
+
+  const dateLongTimeFormat = new Intl.DateTimeFormat('es', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const dateShortTimeFormat = new Intl.DateTimeFormat('es', {
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const hourFormat = new Intl.DateTimeFormat('es', {
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+
+  const yearFormat = new Intl.DateTimeFormat('es', {
+    year: 'numeric',
+  });
+
+  const features = {
+    one_day_event: date
+      ? [
+          {
+            icon: CalendarIcon,
+            label: 'Fecha del evento',
+            value: dateLongTimeFormat.format(new Date(date)),
+          },
+          {
+            icon: ClockIcon,
+            label: 'Hora de inicio',
+            value: hourFormat.format(new Date(date)),
+          },
+        ]
+      : [],
+    long_event:
+      startDate && endDate
+        ? [
+            {
+              icon: CalendarIcon,
+              label: 'Periodo del evento',
+              value: `${dateShortTimeFormat.format(new Date(startDate ?? ''))} - ${dateShortTimeFormat.format(new Date(endDate ?? ''))}, ${yearFormat.format(new Date(startDate ?? ''))}`,
+            },
+          ]
+        : [],
+    one_day_complete: dateComplete
+      ? [
+          {
+            icon: CalendarIcon,
+            label: 'Fecha del evento',
+            value: dateLongTimeFormat.format(new Date(dateComplete)),
+          },
+        ]
+      : [],
+  } as const;
+
+  const config = features[type ?? 'one_day_event'];
+
+  const hrefGoogleMaps = `https://www.google.es/maps/dir/${address?.coordinates?.[1]},${address?.coordinates?.[0]}`;
+
+  return (
+    <div className="grid gap-3">
+      <div className="flex gap-3">
+        <Link
+          aria-label="Como llegar en Google Maps"
+          className="lg:hidden relative h-20 w-20 rounded-full overflow-hidden border"
+          href={hrefGoogleMaps}
+        >
+          <DirectusImage
+            alt=""
+            height={160}
+            item="269afadc-7dcf-4847-944b-5de804626546"
+            width={160}
+          />
+          <div className="absolute inset-0 m-auto bg-red-500 w-4 h-4 rounded-full border border-slate-300" />
+        </Link>
+        <div className="flex flex-col gap-1">
+          <h2 className="text-lg font-medium">Detalles</h2>
+          {config.map((feature, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div className="text-black/80 flex items-center gap-2" key={index}>
+              <feature.icon aria-hidden />
+              <time className="text-sm">{feature.value}</time>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

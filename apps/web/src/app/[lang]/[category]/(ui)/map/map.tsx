@@ -120,11 +120,9 @@ const Map = ({
         scrollWheelZoom
         style={{ height, width: '100%' }}
         zoom={zoom}
+        zoomControl={false}
       >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {items.map((item, idx) => (
           <MarkerItem
             icon={customMarkerIcon}

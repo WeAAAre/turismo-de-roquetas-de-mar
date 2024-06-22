@@ -1,3 +1,4 @@
+'use server';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -14,6 +15,10 @@ import DirectusImage from '@/components/directus-image/directus-image';
 import SearchBar from '../[category]/(ui)/search-bar/search-bar';
 import ShareButton from '../[category]/(ui)/category-list/share-button';
 import generateSeoMetadata from '../(helpers)/generate-seo-metadata';
+import { sortEvents } from './_helpers/sort-events';
+import { formatEventDate } from './_helpers/format-event-date';
+
+import type { Seo } from '../(helpers)/generate-seo-metadata';
 
 export async function generateStaticParams() {
   const languages = await directus.request(
@@ -72,16 +77,9 @@ export async function generateMetadata({ params }: EventsPageProps) {
   );
 
   const images = firstEvent.map((event) => event.image as never);
-  const seo = data[0]?.seo as {
-    nofollow: boolean;
-    noindex: boolean;
-    translations: {
-      title: string;
-      description: string;
-    }[];
-  };
+  const seo = data[0]?.seo as Seo;
 
-  return generateSeoMetadata(seo, { images });
+  return generateSeoMetadata(seo, { images, url: `/${lang}/eventos` });
 }
 
 interface EventsPageProps {
@@ -99,81 +97,79 @@ const EventsPage = async (props: EventsPageProps) => {
 
   const query = searchParams.q;
 
-  const [mainData, data] = await Promise.all([
-    directus.request(
-      readItems('events', {
-        fields: [
-          'id',
-          'date',
-          { image: ['id', 'title'] },
-          'sluglify',
-          {
-            translations: ['name', 'content'],
-          },
-        ],
-        filter: {
-          date: {
-            _gte: new Date().toISOString(),
-          },
+  const data = await directus.request(
+    readItems('events', {
+      fields: [
+        'id',
+        'type',
+        'start_date',
+        'end_date',
+        'date',
+        'date_complete',
+        { image: ['id', 'title'] },
+        'sluglify',
+        {
+          translations: ['name', 'smallDescription', 'content'],
         },
-        sort: ['date'],
-        limit: 1,
-        deep: {
-          translations: {
-            _filter: {
-              languages_code: lang,
+      ],
+      filter: {
+        _or: [
+          {
+            type: {
+              _eq: 'long_event',
+            },
+            end_date: {
+              _gte: new Date().toISOString(),
             },
           },
-        },
-      }),
-    ),
-    directus.request(
-      readItems('events', {
-        fields: [
-          'id',
-          'date',
-          { image: ['id', 'title'] },
-          'sluglify',
           {
-            translations: ['name', 'smallDescription'],
+            type: {
+              _eq: 'one_day_event',
+            },
+            date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_complete',
+            },
+            date_complete: {
+              _gte: new Date().toISOString(),
+            },
           },
         ],
-        filter: {
-          date: {
-            _gte: new Date().toISOString(),
-          },
-          ...(query
-            ? {
-                translations: {
-                  _some: {
-                    languages_code: {
-                      _eq: lang,
-                    },
-                    name: {
-                      _contains: query,
-                    },
+        ...(query
+          ? {
+              translations: {
+                _some: {
+                  languages_code: {
+                    _eq: lang,
+                  },
+                  name: {
+                    _contains: query,
                   },
                 },
-              }
-            : {}),
-        },
-        sort: ['date'],
-        limit: -1,
-        deep: {
-          translations: {
-            _filter: {
-              languages_code: lang,
-            },
+              },
+            }
+          : {}),
+      },
+      sort: ['date'],
+      limit: -1,
+      deep: {
+        translations: {
+          _filter: {
+            languages_code: lang,
           },
         },
-      }),
-    ),
-  ]);
+      },
+    }),
+  );
+  if (!data.length) return notFound();
 
-  if (!mainData.length) return notFound();
-
-  const mainEvent = mainData[0]!;
-  const events = data.slice(1);
+  const eventsSorted = sortEvents(data);
+  const mainEvent = eventsSorted.shift()!;
+  const events = eventsSorted;
 
   return (
     <main className="bg-[rgb(105,98,109)]/10 py-24">
@@ -236,7 +232,7 @@ const EventsPage = async (props: EventsPageProps) => {
               <li key={event.id}>
                 <Link
                   className={cn(
-                    'gap-4 p-4 bg-white rounded-lg border grid grid-cols-12',
+                    'gap-2 md:gap-4 p-3 bg-white rounded-lg border grid grid-cols-12',
                     'hover:border-blue-500/20 hover:bg-blue-500/5 transition-colors',
                   )}
                   href={`/${lang}/eventos/${event.sluglify}`}
@@ -250,22 +246,17 @@ const EventsPage = async (props: EventsPageProps) => {
                       sizes="20vw"
                     />
                   </div>
-                  <div className="col-span-7 md:col-span-8">
-                    <h3>{event.translations?.[0]?.name}</h3>
-                    {event.date ? (
-                      <p className="border px-2 py-1 w-max rounded-lg text-xs mt-2 text-gray-500">
-                        {new Date(event.date).toLocaleDateString(lang, {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                      </p>
-                    ) : null}
-                    <p className="mt-2 text-sm text-gray-500 line-clamp-2">
+                  <div className="col-span-8 md:col-span-8 flex flex-col gap-1">
+                    <h3 className="text-sm md:text-lg">
+                      {event.translations?.[0]?.name}
+                    </h3>
+                    <time className="border px-2 py-1 w-max rounded-lg text-xs text-gray-500">
+                      {formatEventDate(event)}
+                    </time>
+                    <p className="mt-2 text-xs text-gray-500 line-clamp-3">
                       {event.translations?.[0]?.smallDescription}
                     </p>
                   </div>
-                  <ArrowRightIcon className="self-center size-4 col-span-1" />
                 </Link>
               </li>
             ))}

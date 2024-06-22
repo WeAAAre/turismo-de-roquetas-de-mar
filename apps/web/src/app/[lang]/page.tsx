@@ -9,7 +9,9 @@ import HeroSection from './(ui)/hero-section/hero-section';
 import EventsSection from './(ui)/events-section/events-section';
 import CollaboratorsSection from './(ui)/collaborators-section/collaborators-section';
 import BusinessSection from './(ui)/business-section/business-section';
-import generateSeoMetadata from './(helpers)/generate-seo-metadata';
+import generateSeoMetadata, {
+  type Seo,
+} from './(helpers)/generate-seo-metadata';
 
 interface HomePageProps {
   params: Record<string, string>;
@@ -29,6 +31,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: HomePageProps) {
   const lang = params.lang;
+
   const data = await directus.request(
     readItems('home_page', {
       fields: [
@@ -62,16 +65,9 @@ export async function generateMetadata({ params }: HomePageProps) {
     }),
   );
 
-  const seo = data[0]?.seo as {
-    nofollow: boolean;
-    noindex: boolean;
-    translations: {
-      title: string;
-      description: string;
-    }[];
-  };
+  const seo = data[0]?.seo as Seo;
 
-  return generateSeoMetadata(seo, { images: data[0]?.images });
+  return generateSeoMetadata(seo, { images: data[0]?.images, url: `/${lang}` });
 }
 
 const HomePage = (props: HomePageProps) => {

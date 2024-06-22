@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readItems } from '@directus/sdk';
 
+import { cn } from '@/lib/utils';
 import { directus } from '@/lib/directus/server';
 import type { DirectusFile } from '@/lib/directus/schema';
 import * as Grid from '@/components/grid/grid';
@@ -9,6 +10,8 @@ import generateSeoMetadata from '../../(helpers)/generate-seo-metadata';
 import BusinessInfo from './(ui)/business-info/business-info';
 import BusinessImage from './(ui)/business-image/business-image';
 import * as BusinessContent from './(ui)/business-content/business-content';
+
+import type { Seo } from '../../(helpers)/generate-seo-metadata';
 
 export async function generateStaticParams() {
   const items = await directus.request(
@@ -109,14 +112,7 @@ export async function generateMetadata({ params }: BusinessPageProps) {
     }),
   );
 
-  const seo = data[0]?.seo as {
-    nofollow: boolean;
-    noindex: boolean;
-    translations: {
-      title: string;
-      description: string;
-    }[];
-  } | null;
+  const seo = data[0]?.seo as Seo;
 
   if (!seo) return;
 
@@ -124,6 +120,7 @@ export async function generateMetadata({ params }: BusinessPageProps) {
     images: [data[0]?.image, ...(data[0]?.carousel as never)].filter(
       Boolean,
     ) as never,
+    url: `/${lang}/${category}/${business}`,
   });
 }
 
@@ -237,24 +234,22 @@ const BusinessPage = async (props: BusinessPageProps) => {
                 </BusinessContent.Links>
               ) : null}
             </BusinessContent.Header>
-            {activeTab === 'info' && (
-              <>
-                <BusinessContent.Text>
-                  {item.translations?.[0]?.content}
-                </BusinessContent.Text>
-                <BusinessContent.PDFs
-                  pdfs={item.pdfs?.map((pdf) => pdf.directus_files_id)}
-                />
-                <BusinessContent.Image360 src={item.image360 as string} />
-              </>
-            )}
-            {activeTab === 'gallery' && (
+            <div className={cn(activeTab === 'info' ? 'block' : 'hidden')}>
+              <BusinessContent.Text>
+                {item.translations?.[0]?.content}
+              </BusinessContent.Text>
+              <BusinessContent.PDFs
+                pdfs={item.pdfs?.map((pdf) => pdf.directus_files_id)}
+              />
+              <BusinessContent.Image360 src={item.image360 as string} />
+            </div>
+            <div className={cn(activeTab === 'gallery' ? 'block' : 'hidden')}>
               <BusinessContent.Gallery
                 images={item.carousel?.map(
                   (image) => image.directus_files_id as DirectusFile,
                 )}
               />
-            )}
+            </div>
           </BusinessContent.Root>
         </Grid.Item>
         <Grid.Item col={hasOnlyOneComponent ? '12' : '12|4'}>
@@ -270,6 +265,7 @@ const BusinessPage = async (props: BusinessPageProps) => {
                 instagram={item.instagram}
                 name={item.name}
                 phone={item.phone}
+                streetAddress={item.streetAddress}
                 tiktok={item.tiktok}
                 tripadvisor={item.tripadvisor}
                 twitter={item.twitter}

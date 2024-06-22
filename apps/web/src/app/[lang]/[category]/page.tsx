@@ -10,6 +10,8 @@ import SearchBar from './(ui)/search-bar/search-bar';
 import DialogMap from './(ui)/category-list/dialog-map/dialog-map';
 import CategoryList from './(ui)/category-list/category-list';
 
+import type { Seo } from '../(helpers)/generate-seo-metadata';
+
 export async function generateStaticParams() {
   const categories = await directus.request(
     readItems('category', {
@@ -80,16 +82,12 @@ export async function generateMetadata({ params }: CategoryPageProps) {
     }),
   );
 
-  const seo = data[0]?.seo as {
-    nofollow: boolean;
-    noindex: boolean;
-    translations: {
-      title: string;
-      description: string;
-    }[];
-  };
+  const seo = data[0]?.seo as Seo;
 
-  return generateSeoMetadata(seo, { images: data[0]?.image });
+  return generateSeoMetadata(seo, {
+    images: data[0]?.image,
+    url: `/${lang}/${category}`,
+  });
 }
 
 interface CategoryPageProps {

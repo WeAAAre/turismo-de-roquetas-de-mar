@@ -84,14 +84,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ env.NPM_TOKEN }}
 
-  deploy_console:
-    name: Deploy console.turismoderoquetasdemar.es
-    needs: [release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Easypanel
-        run: |
-          curl --request GET '${{ env.DEPLOY_WEBHOOK_CONSOLE }}'
+  # deploy_console:
+  #   name: Deploy console.turismoderoquetasdemar.es
+  #   needs: [release]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy to Easypanel
+  #       run: |
+  #         curl --request GET '${{ env.DEPLOY_WEBHOOK_CONSOLE }}'
 
   deploy:
     name: Deploy turismoderoquetasdemar.es

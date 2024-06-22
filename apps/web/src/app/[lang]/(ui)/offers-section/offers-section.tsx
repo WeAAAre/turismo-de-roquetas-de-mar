@@ -49,14 +49,14 @@ const OffersSection = async (props: OffersSectionProps) => {
 
   return (
     <Grid.Root className="px-0">
-      <Grid.Item className="px-5" col="12">
+      <Grid.Item className="px-5 md:px-0" col="12">
         <SectionTitle title="Ofertas e ideas para disfutar" />
       </Grid.Item>
-      <Grid.Item className=" mt-5 lg:mt-10" col="12">
+      <Grid.Item className="mt-5 lg:mt-10" col="12">
         <OffersList>
           {offers.map((offer) => (
             <OfferCard.Root
-              className="first-of-type:ml-5"
+              className="first-of-type:ml-5 md:first-of-type:ml-0"
               href={getOfferLink(offer)}
               key={offer.id}
             >

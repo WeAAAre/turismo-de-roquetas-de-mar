@@ -35,7 +35,7 @@ export async function generateStaticParams() {
   );
 
   return posts.map((post) => ({
-    lang: 'es-Es',
+    lang: 'es-ES',
     post: post.sluglify,
   }));
 }

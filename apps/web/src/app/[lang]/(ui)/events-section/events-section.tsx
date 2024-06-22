@@ -8,6 +8,7 @@ import * as Grid from '@/components/grid/grid';
 import DirectusImage from '@/components/directus-image/directus-image';
 
 import SectionTitle from '../section-title/section-title';
+import { sortEvents } from '../../eventos/_helpers/sort-events';
 
 interface EventsSectionProps {
   lang: string;
@@ -29,9 +30,32 @@ const EventsSection = async (props: EventsSectionProps) => {
         },
       ],
       filter: {
-        date: {
-          _gte: new Date().toISOString(),
-        },
+        _or: [
+          {
+            type: {
+              _eq: 'long_event',
+            },
+            end_date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_event',
+            },
+            date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_complete',
+            },
+            date_complete: {
+              _gte: new Date().toISOString(),
+            },
+          },
+        ],
       },
       deep: {
         translations: {
@@ -45,10 +69,12 @@ const EventsSection = async (props: EventsSectionProps) => {
     }),
   );
 
-  const mainEvent = result[0];
-  const secondaryEvents = result.slice(1);
+  const eventsSorted = sortEvents(result);
+  const mainEvent = eventsSorted.shift();
 
   if (!mainEvent) return null;
+
+  const secondaryEvents = eventsSorted.slice(1);
 
   const getEventLink = (event: { sluglify: string | null }) =>
     `/${lang}/eventos/${event.sluglify}`;

@@ -23,7 +23,7 @@ const Map = dynamic(() => import('@/app/[lang]/[category]/(ui)/map/map'), {
 interface BusinessInfoProps {
   address?: [number, number];
   name: string;
-  streetAddress?: string;
+  streetAddress?: string | null;
   image?: string;
   email?: string | null;
   facebook?: string | null;

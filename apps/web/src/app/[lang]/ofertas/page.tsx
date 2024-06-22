@@ -13,6 +13,8 @@ import SearchBar from '../[category]/(ui)/search-bar/search-bar';
 import generateSeoMetadata from '../(helpers)/generate-seo-metadata';
 import DialogDetailOffer from './(ui)/dialog-detail-offer/dialog-detail-offer';
 
+import type { Seo } from '../(helpers)/generate-seo-metadata';
+
 export async function generateStaticParams() {
   const languages = await directus.request(
     readItems('languages', {
@@ -65,18 +67,11 @@ export async function generateMetadata({ params }: OffersPageProps) {
   );
 
   const images = offers.map((offer) => offer.image as string);
-  const seo = data[0]?.seo as {
-    nofollow: boolean;
-    noindex: boolean;
-    translations: {
-      title: string;
-      description: string;
-    }[];
-  };
+  const seo = data[0]?.seo as Seo;
 
   if (!seo) return;
 
-  return generateSeoMetadata(seo, { images });
+  return generateSeoMetadata(seo, { images, url: `/${lang}/ofertas` });
 }
 
 interface OffersPageProps {
