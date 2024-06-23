@@ -29,9 +29,32 @@ export async function generateStaticParams() {
         },
       ],
       filter: {
-        date: {
-          _gte: new Date().toISOString(),
-        },
+        _or: [
+          {
+            type: {
+              _eq: 'long_event',
+            },
+            end_date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_event',
+            },
+            date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_complete',
+            },
+            date_complete: {
+              _gte: new Date().toISOString(),
+            },
+          },
+        ],
       },
     }),
   );
@@ -109,7 +132,7 @@ export async function generateMetadata({ params }: EventPageProps) {
           ? [{ title: data[0]?.translations?.[0]?.name || '' }]
           : seo?.translations,
     } as never,
-    { images: data[0]?.image, url: `/${lang}/eventos/${sluglify}` },
+    { images: data[0]?.image, url: `/eventos/${sluglify}`, lang },
   );
 }
 

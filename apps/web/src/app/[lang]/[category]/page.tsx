@@ -86,7 +86,8 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 
   return generateSeoMetadata(seo, {
     images: data[0]?.image,
-    url: `/${lang}/${category}`,
+    url: `/${category}`,
+    lang,
   });
 }
 

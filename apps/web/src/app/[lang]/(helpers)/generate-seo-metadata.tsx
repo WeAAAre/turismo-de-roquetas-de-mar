@@ -14,9 +14,9 @@ interface GenerateSeoMetadataOptions {
     | null
     | DirectusFile;
   url: string;
+  lang?: string;
 }
 
-type OGImage = string | OGImageDescriptor | URL;
 type OGImageDescriptor = {
   url: string | URL;
   secureUrl?: string | URL;
@@ -46,9 +46,10 @@ const computeDirectusFile = (file: DirectusFile): OGImageDescriptor => {
   };
 };
 
-const computeImages = (
-  images: GenerateSeoMetadataOptions['images'],
-): OGImage | OGImage[] | undefined => {
+const isNotNull = <T,>(e: T): e is NonNullable<T> =>
+  e !== null && e !== undefined;
+
+const computeImages = (images: GenerateSeoMetadataOptions['images']) => {
   if (!images) return;
 
   if (typeof images === 'string') {
@@ -74,7 +75,7 @@ const computeImages = (
       }
       return null;
     })
-    .filter(Boolean) as OGImage[];
+    .filter(isNotNull);
 };
 
 const generateSeoMetadata = (
@@ -82,24 +83,24 @@ const generateSeoMetadata = (
   options: GenerateSeoMetadataOptions,
 ) => {
   if (!seo) return { title: '' };
-  const { images: rawImages } = options;
+  const { images: rawImages, lang = '' } = options;
+
   const title = seo?.translations?.[0]?.title;
   const description = seo?.translations?.[0]?.description;
   const images = computeImages(rawImages);
 
   const languages = i18n.locales.reduce(
-    (acc, lang) => {
-      if (lang === seo.translations?.[0]?.languages_code) return acc;
+    (acc, cLang) => {
+      if (cLang === options.lang) return acc;
       return {
         ...acc,
-        [lang]: `${env.URL}/${lang}/`,
+        [cLang.toLowerCase()]: `${env.URL}/${cLang}${options.url}`,
       };
     },
     {} as Record<string, string>,
   );
 
   return {
-    metadataBase: new URL(env.DIRECTUS_API_URL),
     title,
     description,
     robots: {
@@ -107,7 +108,7 @@ const generateSeoMetadata = (
       index: !seo?.noindex,
     },
     alternates: {
-      canonical: `${env.URL}${options.url}`,
+      canonical: `${env.URL}/${lang}${options.url}`,
       languages,
     },
     openGraph: {

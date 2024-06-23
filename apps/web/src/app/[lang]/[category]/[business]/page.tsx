@@ -120,7 +120,8 @@ export async function generateMetadata({ params }: BusinessPageProps) {
     images: [data[0]?.image, ...(data[0]?.carousel as never)].filter(
       Boolean,
     ) as never,
-    url: `/${lang}/${category}/${business}`,
+    url: `/${category}/${business}`,
+    lang,
   });
 }
 

@@ -8,7 +8,7 @@ interface EventType {
   date_complete: Event['date_complete'];
 }
 
-const getReferenceDate = (event: EventType) => {
+const getEventReferenceDate = (event: EventType) => {
   switch (event.type) {
     case 'long_event':
       return event.start_date!;
@@ -22,10 +22,10 @@ const getReferenceDate = (event: EventType) => {
 const sortEvents = <TEvent extends EventType>(data: TEvent[]): TEvent[] => {
   return data.sort((a, b) => {
     return (
-      new Date(getReferenceDate(a)).getTime() -
-      new Date(getReferenceDate(b)).getTime()
+      new Date(getEventReferenceDate(a)).getTime() -
+      new Date(getEventReferenceDate(b)).getTime()
     );
   });
 };
 
-export { sortEvents };
+export { sortEvents, getEventReferenceDate };

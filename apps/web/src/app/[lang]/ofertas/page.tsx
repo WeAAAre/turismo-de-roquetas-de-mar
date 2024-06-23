@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: OffersPageProps) {
 
   if (!seo) return;
 
-  return generateSeoMetadata(seo, { images, url: `/${lang}/ofertas` });
+  return generateSeoMetadata(seo, { images, url: `/ofertas`, lang });
 }
 
 interface OffersPageProps {

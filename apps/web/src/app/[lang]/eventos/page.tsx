@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: EventsPageProps) {
   const images = firstEvent.map((event) => event.image as never);
   const seo = data[0]?.seo as Seo;
 
-  return generateSeoMetadata(seo, { images, url: `/${lang}/eventos` });
+  return generateSeoMetadata(seo, { images, url: `/eventos`, lang });
 }
 
 interface EventsPageProps {

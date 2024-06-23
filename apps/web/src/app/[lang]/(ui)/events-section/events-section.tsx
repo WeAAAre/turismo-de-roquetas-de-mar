@@ -8,7 +8,10 @@ import * as Grid from '@/components/grid/grid';
 import DirectusImage from '@/components/directus-image/directus-image';
 
 import SectionTitle from '../section-title/section-title';
-import { sortEvents } from '../../eventos/_helpers/sort-events';
+import {
+  getEventReferenceDate,
+  sortEvents,
+} from '../../eventos/_helpers/sort-events';
 
 interface EventsSectionProps {
   lang: string;
@@ -20,6 +23,10 @@ const EventsSection = async (props: EventsSectionProps) => {
     readItems('events', {
       fields: [
         'id',
+        'type',
+        'start_date',
+        'end_date',
+        'date_complete',
         'date',
         'image',
         'id',
@@ -64,17 +71,16 @@ const EventsSection = async (props: EventsSectionProps) => {
           },
         },
       },
-      sort: ['date'],
-      limit: 6,
+      limit: -1,
     }),
   );
 
-  const eventsSorted = sortEvents(result);
+  const eventsSorted = sortEvents(result).slice(0, 6);
   const mainEvent = eventsSorted.shift();
 
   if (!mainEvent) return null;
 
-  const secondaryEvents = eventsSorted.slice(1);
+  const secondaryEvents = eventsSorted;
 
   const getEventLink = (event: { sluglify: string | null }) =>
     `/${lang}/eventos/${event.sluglify}`;
@@ -96,14 +102,20 @@ const EventsSection = async (props: EventsSectionProps) => {
             />
             <div className="absolute top-4 right-4 rounded-lg bg-white items-center px-4 py-1 flex flex-col">
               <span className="text-xl font-bold">
-                {new Date(mainEvent.date).toLocaleDateString('es-ES', {
-                  day: 'numeric',
-                })}
+                {new Date(getEventReferenceDate(mainEvent)).toLocaleDateString(
+                  'es-ES',
+                  {
+                    day: 'numeric',
+                  },
+                )}
               </span>
               <span className="text-xs">
-                {new Date(mainEvent.date).toLocaleDateString('es-ES', {
-                  month: 'short',
-                })}
+                {new Date(getEventReferenceDate(mainEvent)).toLocaleDateString(
+                  'es-ES',
+                  {
+                    month: 'short',
+                  },
+                )}
               </span>
             </div>
             <div className="absolute bottom-0 w-full backdrop-blur-2xl px-4 bg-black/10 py-4">
@@ -129,14 +141,20 @@ const EventsSection = async (props: EventsSectionProps) => {
               >
                 <div className="flex flex-col px-4 justify-center col-span-2">
                   <span className="leading-4 lg:leading-5 text-xl lg:text-2xl font-semibold">
-                    {new Date(event.date).toLocaleDateString('es-ES', {
-                      day: 'numeric',
-                    })}
+                    {new Date(getEventReferenceDate(event)).toLocaleDateString(
+                      'es-ES',
+                      {
+                        day: 'numeric',
+                      },
+                    )}
                   </span>
                   <span className="text-base lg:text-lg">
-                    {new Date(event.date).toLocaleDateString('es-ES', {
-                      month: 'short',
-                    })}
+                    {new Date(getEventReferenceDate(event)).toLocaleDateString(
+                      'es-ES',
+                      {
+                        month: 'short',
+                      },
+                    )}
                   </span>
                 </div>
                 <div className="relative col-span-3 w-full">

@@ -13,7 +13,14 @@ import { generateStaticParams as businessStaticParams } from './[lang]/[category
 
 import type { MetadataRoute } from 'next';
 
-const LANGUAGES: Locale[] = ['es-ES', 'en-US'];
+const LANGUAGES: Locale[] = [
+  'es-ES',
+  'en-US',
+  'de-DE',
+  'it-IT',
+  'pt-BR',
+  'fr-FR',
+];
 
 const config = {
   home: {

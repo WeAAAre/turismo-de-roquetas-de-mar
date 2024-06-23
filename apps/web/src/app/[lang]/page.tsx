@@ -67,7 +67,11 @@ export async function generateMetadata({ params }: HomePageProps) {
 
   const seo = data[0]?.seo as Seo;
 
-  return generateSeoMetadata(seo, { images: data[0]?.images, url: `/${lang}` });
+  return generateSeoMetadata(seo, {
+    images: data[0]?.images,
+    url: '',
+    lang,
+  });
 }
 
 const HomePage = (props: HomePageProps) => {
