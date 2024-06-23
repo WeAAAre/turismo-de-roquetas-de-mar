@@ -77,11 +77,7 @@ export async function generateMetadata({ params }: EventPageProps) {
       fields: [
         {
           image: ['id', 'width', 'height', 'title'],
-        },
-        {
           translations: ['name'],
-        },
-        {
           seo: [
             '*',
             {
@@ -91,9 +87,6 @@ export async function generateMetadata({ params }: EventPageProps) {
         },
       ],
       filter: {
-        date: {
-          _gte: new Date().toISOString(),
-        },
         sluglify: {
           _eq: sluglify,
         },
@@ -115,14 +108,7 @@ export async function generateMetadata({ params }: EventPageProps) {
     }),
   );
 
-  const seo = data[0]?.seo as {
-    nofollow: boolean;
-    noindex: boolean;
-    translations?: {
-      title: string;
-      description: string;
-    }[];
-  } | null;
+  const seo = data[0]?.seo;
 
   return generateSeoMetadata(
     {
@@ -132,7 +118,7 @@ export async function generateMetadata({ params }: EventPageProps) {
           ? [{ title: data[0]?.translations?.[0]?.name || '' }]
           : seo?.translations,
     } as never,
-    { images: data[0]?.image, url: `/eventos/${sluglify}`, lang },
+    { images: data[0]?.image as never, url: `/eventos/${sluglify}`, lang },
   );
 }
 

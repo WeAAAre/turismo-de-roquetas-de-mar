@@ -44,9 +44,32 @@ export async function generateMetadata({ params }: EventsPageProps) {
       ],
       limit: 1,
       filter: {
-        date: {
-          _gte: new Date().toISOString(),
-        },
+        _or: [
+          {
+            type: {
+              _eq: 'long_event',
+            },
+            end_date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_event',
+            },
+            date: {
+              _gte: new Date().toISOString(),
+            },
+          },
+          {
+            type: {
+              _eq: 'one_day_complete',
+            },
+            date_complete: {
+              _gte: new Date().toISOString(),
+            },
+          },
+        ],
       },
       sort: ['date'],
     }),
